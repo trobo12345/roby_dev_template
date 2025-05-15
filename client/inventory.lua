@@ -8,7 +8,7 @@ function HasItem(item, count)
         local hasItem = exports.ox_inventory:Search('count', item) >= count
         return hasItem
     else
-        -- Fallback for different frameworks
+        -- Alternatív megoldás különböző keretrendszerekhez
         if Config.UseESX then
             local xPlayer = ESX.GetPlayerData()
             for _, i in ipairs(xPlayer.inventory) do
@@ -28,38 +28,38 @@ function HasItem(item, count)
     end
 end
 
--- Example of opening a custom stash using ox_inventory
+-- Példa egy egyedi raktár (stash) megnyitására ox_inventory használatával
 function OpenCustomStash(id, label)
     if Config.OxInventory.UseItemFunctions then
-        exports.ox_inventory:openInventory('stash', {id = id or Config.OxInventory.CustomInventory, label = label or 'Custom Stash'})
+        exports.ox_inventory:openInventory('stash', {id = id or Config.OxInventory.CustomInventory, label = label or 'Egyedi raktár'})
     else
         ShowNotification('ox_inventory nem elérhető', 'error')
     end
 end
 
--- Example command to test stash opening
+-- Parancs példa a raktár megnyitásának tesztelésére
 RegisterCommand('teststash', function()
     OpenCustomStash()
 end, false)
 
--- Example of using an item with a custom animation
+-- Példa egy tárgy használatára egyedi animációval
 RegisterNetEvent('roby_dev_template:client:useItem')
 AddEventHandler('roby_dev_template:client:useItem', function(item)
     local playerPed = PlayerPedId()
     
-    -- Cancel if player is in a vehicle
+    -- Megszakítás, ha a játékos járműben van
     if IsPedInAnyVehicle(playerPed, true) then
         ShowNotification('Nem használhatod ezt az eszközt járműben', 'error')
         return
     end
     
-    -- Play animation
+    -- Animáció lejátszása
     TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_CLIPBOARD", 0, true)
     
-    -- Show progress bar
+    -- Folyamatjelző sáv megjelenítése
     local success = StartProgressBar('Tárgy használata...', 3000)
     
-    -- Clear animation
+    -- Animáció törlése
     ClearPedTasks(playerPed)
     
     if success then
@@ -70,7 +70,7 @@ AddEventHandler('roby_dev_template:client:useItem', function(item)
     end
 end)
 
--- Example of opening a shop using ox_inventory
+-- Példa bolt megnyitására ox_inventory használatával
 function OpenShop(shopName)
     if Config.OxInventory.UseItemFunctions then
         exports.ox_inventory:openInventory('shop', {type = shopName or 'General'})
@@ -79,7 +79,7 @@ function OpenShop(shopName)
     end
 end
 
--- Example command to test shop opening
+-- Parancs példa a bolt megnyitásának tesztelésére
 RegisterCommand('testshop', function()
     OpenShop()
 end, false)
