@@ -82,7 +82,6 @@ AddEventHandler('roby_dev_template:server:exampleEvent', function(data)
     
     -- Példa munka ellenőrzés
     if not HasJob(src, 'police') then
-        -- Send client notification
         TriggerClientEvent('roby_dev_template:client:showNotification', src, 'Nincs megfelelő jogosultságod', 'error')
         return
     end
@@ -146,7 +145,6 @@ RegisterCommand('testdb', function(source, args)
         elseif Config.UseQBCore then
             identifier = player.PlayerData.license
         else
-            -- Use a placeholder identifier for standalone mode
             identifier = GetPlayerIdentifierByType(src, 'license')
         end
         
@@ -167,11 +165,11 @@ function SendDiscordWebhook(title, message, type)
     -- Típus konvertálása színné
     local color
     if type == 'success' then
-        color = 65280 -- Green
+        color = 65280 
     elseif type == 'error' then
-        color = 16711680 -- Red
+        color = 16711680 
     elseif type == 'warning' then
-        color = 16776960 -- Yellow
+        color = 16776960 
     else
         color = Config.Discord.Color 
     end
